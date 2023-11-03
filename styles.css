@@ -2,9 +2,12 @@
     --color-primary: #123456;
     --color-secondary: #FFF;
     --azul-royal: #144480;
+    --azul-profundo: #01080E;
     --fundo-card-timer: rgba(20, 68, 128, 0.30);
     --lils: #B872FF;
     --linear-botes: linear-gradient(180deg, #B872FF 0%, #144480 100%);
+    --fundo-card: rgba(255, 255, 255, 0.50);
+    --fundo-card-concludo: rgba(0, 244, 191, 0.40);
 }
 
 [data-contexto="foco"] {
