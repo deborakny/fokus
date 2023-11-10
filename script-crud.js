@@ -15,6 +15,11 @@ fill="none" xmlns="http://www.w3.org/2000/svg">
     fill="#01080E" />
 </svg>`
 
+const clearForm = () => {
+    textArea.value = '';
+    taskForm.classList.add('hidden');
+}
+
 function createTask(task) {
     const li = document.createElement('li');
     li.classList.add('app__section-task-list-item');
@@ -48,6 +53,7 @@ taskForm.addEventListener('submit', (ev) => {
     tasks.push(task);
     const taskItem = createTask(task);
     taskListContainer.appendChild(taskItem);
+    clearForm();
 });
 
 // tasks.forEach(task => {
@@ -56,6 +62,6 @@ taskForm.addEventListener('submit', (ev) => {
 // });
 
 cancelButton.addEventListener('click', () => {
-    taskForm.classList.toggle('hidden');
-})
+    clearForm();
+});
 
