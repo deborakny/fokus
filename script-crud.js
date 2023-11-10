@@ -5,7 +5,9 @@ const formLabel = document.querySelector('.app__form-label');
 const textArea = document.querySelector('.app__form-textarea');
 const cancelButton = document.querySelector('.app__form-footer__button--cancel');
 
-let tasks = [];
+const tasksLocalStorage = localStorage.getItem('tasks');
+
+let tasks = tasksLocalStorage ? JSON.parse(tasksLocalStorage) : [];
 
 const taskIconSvg = `<svg class="app__section-task-icon-status" width="24" height="24" viewBox="0 0 24 24"
 fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,10 +40,19 @@ function createTask(task) {
     return li;
 }
 
+tasks.forEach(task => {
+    const taskItem = createTask(task);
+    taskListContainer.appendChild(taskItem);
+});
+
 toggleTaskFormButton.addEventListener('click', () => {
     formLabel.textContent = "Adicionando tarefa";
     taskForm.classList.toggle('hidden');
 });
+
+const updateLocalStorage = () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
 taskForm.addEventListener('submit', (ev) => {
     ev.preventDefault();
@@ -53,13 +64,9 @@ taskForm.addEventListener('submit', (ev) => {
     tasks.push(task);
     const taskItem = createTask(task);
     taskListContainer.appendChild(taskItem);
+    updateLocalStorage();
     clearForm();
 });
-
-// tasks.forEach(task => {
-//     const taskItem = createTask(task);
-//     taskListContainer.appendChild(taskItem);
-// });
 
 cancelButton.addEventListener('click', () => {
     clearForm();
