@@ -1,4 +1,7 @@
 const taskListContainer = document.querySelector('.app__section-task-list');
+const taskForm = document.querySelector('.app__form-add-task');
+const toggleTaskFormButton = document.querySelector('.app__button--add-task');
+const formLabel = document.querySelector('.app__form-label');
 
 let tasks = [
     {
@@ -41,4 +44,9 @@ function createTask(task) {
 tasks.forEach(task => {
     const taskItem = createTask(task);
     taskListContainer.appendChild(taskItem);
+});
+
+toggleTaskFormButton.addEventListener('click', () => {
+    formLabel.textContent = "Adicionando tarefa";
+    taskForm.classList.toggle('hidden');
 })
