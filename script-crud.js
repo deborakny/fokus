@@ -5,6 +5,8 @@ const formLabel = document.querySelector('.app__form-label');
 const textArea = document.querySelector('.app__form-textarea');
 const cancelButton = document.querySelector('.app__form-footer__button--cancel');
 
+const taskInProgress = document.querySelector('.app__section-active-task-description');
+
 const tasksLocalStorage = localStorage.getItem('tasks');
 
 let tasks = tasksLocalStorage ? JSON.parse(tasksLocalStorage) : [];
@@ -16,6 +18,27 @@ fill="none" xmlns="http://www.w3.org/2000/svg">
     d="M9 16.1719L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.82812 12L9 16.1719Z"
     fill="#01080E" />
 </svg>`
+
+let selectedTask = null;
+let selectedTaskItem = null;
+
+const selectTask = (task, el) => {
+    document.querySelectorAll('.app__section-task-list-item-active').forEach((item) => {
+        item.classList.remove('app__section-task-list-item-active');
+    });
+
+    if (selectedTask == task) {
+        taskInProgress.textContent = null;
+        selectedTaskItem = null;
+        selectedTask = null;
+        return;        
+    }
+
+    selectedTask = task;
+    selectedTaskItem = el;
+    taskInProgress.textContent = task.description;
+    el.classList.add('app__section-task-list-item-active');
+}
 
 const clearForm = () => {
     textArea.value = '';
@@ -31,8 +54,11 @@ function createTask(task) {
 
     const paragraph = document.createElement('p');
     paragraph.classList.add('app__section-task-list-item-description');
-
     paragraph.textContent = task.description;
+
+    li.onclick = () => {
+        selectTask(task, li);
+    }
 
     li.appendChild(svgIcon);
     li.appendChild(paragraph);
@@ -56,7 +82,6 @@ const updateLocalStorage = () => {
 
 taskForm.addEventListener('submit', (ev) => {
     ev.preventDefault();
-    console.log(ev);
     const task = {
         description: textArea.value,
         done: false
